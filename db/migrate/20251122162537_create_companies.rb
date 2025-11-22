@@ -1,6 +1,6 @@
-class CreateCompaniesTable < ActiveRecord::Migration[7.0]
+class CreateCompanies < ActiveRecord::Migration[7.0]
   def change
-    create_table :companies_tables do |t|
+    create_table :companies do |t|
       t.string :coc_number, null: false
       t.string :company_name, null: false
       t.string :city, null: false
