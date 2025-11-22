@@ -7,13 +7,22 @@
         <%= form_with url: root_path, method: :get, 
             data: { turbo_frame: "results" }, 
             class: "mb-4" do |f| %>
-          <div class="mb-3">
-            <%= f.text_field :query, 
-                value: params[:query],
-                class: "form-control form-control-lg",
-                placeholder: "Search by company name, city, or CoC number...",
-                autofocus: true,
-                data: { action: "input->search#submit" } %>
+          <div class="row g-2">
+            <div class="col">
+              <%= f.text_field :query, 
+                  value: params[:query],
+                  class: "form-control form-control-lg",
+                  placeholder: "Search by company name, city, or CoC number...",
+                  autofocus: true,
+                  data: { action: "input->search#submit" } %>
+            </div>
+            <div class="col-auto">
+              <%= f.select :limit, 
+                  options_for_select([['10', 10], ['25', 25], ['50', 50], ['100', 100]], params[:limit] || 100),
+                  {},
+                  class: "form-select",
+                  data: { action: "change->search#submit" } %>
+            </div>
           </div>
         <% end %>
       </div>
@@ -22,9 +31,9 @@
         <% if @companies.any? %>
           <div class="d-flex justify-content-between align-items-center mb-3">
             <p class="text-muted mb-0">
-              <%= pluralize(@companies.size, 'result') %>
-              <% if @companies.size == 100 %>
-                (showing first 100)
+              <%= pluralize(@total_count, 'result') %>
+              <% if @companies.size < @total_count %>
+                (showing first <%= params[:limit] || 100 %>)
               <% end %>
             </p>
             <%= link_to "Admin - Import Companies", admin_companies_path, class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "_top" } %>

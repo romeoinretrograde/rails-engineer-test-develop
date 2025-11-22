@@ -1,6 +1,8 @@
 class CompaniesController < ApplicationController
     def index
-        @companies = Company.search(params[:query]).limit(100)
+        search_results = Company.search(params[:query])
+        @total_count = search_results.count
+        @companies = search_results.limit(params[:limit] || 100)
     end
 
     def admin
