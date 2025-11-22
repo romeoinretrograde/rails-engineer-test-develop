@@ -38,7 +38,7 @@
             </p>
             <%= link_to "Admin - Import Companies", admin_companies_path, class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "_top" } %>
           </div>
-          <div class="list-group">
+          <div class="list-group" style="max-height: 600px; overflow-y: auto;">
             <% @companies.each do |company| %>
               <div class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
