@@ -1,0 +1,64 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <h1 class="mb-4">Import Companies</h1>
+
+      <% if notice %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <%= notice %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <% if alert %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <%= alert %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Upload CSV File</h5>
+          <p class="card-text text-muted">
+            Select a CSV file containing company data to import. The file should have columns for CoC number, company name, and city.
+          </p>
+
+          <%= form_with url: import_companies_path, multipart: true, class: "mt-3" do |f| %>
+            <div class="mb-3">
+              <%= f.label :file, "Choose CSV file", class: "form-label" %>
+              <%= f.file_field :file, 
+                  accept: ".csv", 
+                  class: "form-control", 
+                  required: true %>
+              <div class="form-text">
+                File format: CSV with semicolon (;) separator
+              </div>
+            </div>
+            
+            <div class="d-grid gap-2">
+              <%= f.submit "Import Companies", 
+                  class: "btn btn-primary", 
+                  data: { confirm: "This will import/update companies. Continue?" } %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <%= link_to "← Back to Search", root_path, class: "btn btn-outline-secondary" %>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Import Information</h6>
+          <ul class="small mb-0">
+            <li>Duplicate CoC numbers will be updated with the latest data</li>
+            <li>Rows with blank CoC numbers will be skipped</li>
+            <li>Large files are processed in batches for efficiency</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="mb-4">Company Search</h1>
+      
+      <div data-controller="search">
+        <%= form_with url: root_path, method: :get, 
+            data: { turbo_frame: "results" }, 
+            class: "mb-4" do |f| %>
+          <div class="mb-3">
+            <%= f.text_field :query, 
+                value: params[:query],
+                class: "form-control form-control-lg",
+                placeholder: "Search by company name, city, or CoC number...",
+                autofocus: true,
+                data: { action: "input->search#submit" } %>
+          </div>
+        <% end %>
+      </div>
+
+      <%= turbo_frame_tag "results" do %>
+        <% if @companies.any? %>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <p class="text-muted mb-0">
+              <%= pluralize(@companies.size, 'result') %>
+              <% if @companies.size == 100 %>
+                (showing first 100)
+              <% end %>
+            </p>
+            <%= link_to "Admin - Import Companies", admin_companies_path, class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "_top" } %>
+          </div>
+          <div class="list-group">
+            <% @companies.each do |company| %>
+              <div class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1"><%= company.company_name %></h5>
+                </div>
+                <p class="mb-1">
+                  <i class="bi bi-geo-alt"></i>
+                  <strong>City:</strong> <%= company.city %>
+                </p>
+                <small class="text-muted">
+                  <i class="bi bi-building"></i>
+                  CoC Number: <%= company.coc_number %>
+                </small>
+              </div>
+            <% end %>
+          </div>
+        <% elsif params[:query].present? %>
+          <div class="alert alert-info">
+            No companies found matching "<strong><%= params[:query] %></strong>"
+          </div>
+        <% else %>
+          <p class="text-muted text-center">
+            Start typing to search for companies...
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
