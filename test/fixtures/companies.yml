@@ -1,0 +1,26 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+sonae:
+  coc_number: "500278389"
+  company_name: "Sonae SGPS SA"
+  city: "Maia"
+
+galp:
+  coc_number: "504499777"
+  company_name: "Galp Energia SGPS SA"
+  city: "Lisboa"
+
+edp:
+  coc_number: "500697256"
+  company_name: "EDP - Energias de Portugal SA"
+  city: "Lisboa"
+
+jeronimo_martins:
+  coc_number: "500150040"
+  company_name: "Jerónimo Martins SGPS SA"
+  city: "Lisboa"
+
+nos:
+  coc_number: "504615947"
+  company_name: "NOS SGPS SA"
+  city: "Lisboa"
